@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { React, useState } from "react";
+import { Link } from "react-router-dom";
 import "../StyleSheet/loginScreen.css"
 
 const LoginScreen=()=>{
@@ -14,13 +15,13 @@ const LoginScreen=()=>{
     return(
         <div className="loginContainer">
             <div className="loginCard">
-                <h1>Welcome to Func Fit</h1>
+                <h1 className="formTitle">Welcome to Func Fit</h1>
                 <input  type='text' placeholder="username" />
-                <input  type='password' placeholder="password" />
                 {/* <input style={{width:'50%', height:'5%'}} type='text' placeholder="username" />
                 <input style={{width:'50%', height:'5%'}} type='password' placeholder="password" /> */}
-
-                <div className="loginButton" onClick={()=>loginAlertPopup()}>Login</div>
+                <Link id="RouterNavLink"  to="/home">
+                    <div className="flex justify-center align-center bg-blue-400 pt-4 pb-4 pl-8 pr-8 rounded-md">Login</div>
+                </Link>
 
                 <div className="otherLogins">
                     <div className="google"></div>
@@ -28,9 +29,11 @@ const LoginScreen=()=>{
 
                 </div>
                 
-                <div style={{width:'90%', display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>
+                <div div className="accountMethod">
                 <a className="dText"> Dont have an account? </a>
-                <a className="rText" onClick={()=>alert("new user registered")}> register here</a>
+                <Link to="/register">
+                    <a className="rText"> register here</a>
+                </Link>
                 </div>
 
 

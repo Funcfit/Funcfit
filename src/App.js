@@ -1,11 +1,11 @@
 
 import React from "react";
-import LoginScreen from "../src/Components/LoginScreen"
+import AppRoutes from "./Routes/AppRoutes";
 
 function App() {
   return (
     <div className="App">
-     <LoginScreen />
+      <AppRoutes/>
     </div>
   );
 }

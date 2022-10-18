@@ -1,15 +1,15 @@
 *{
     margin:0;
     box-sizing: border-box;
-    font-family:"LoginFont";
+    font-family:"RegisterFont";
 }
 
 @font-face {
-    font-family: "LoginFont";
+    font-family: "RegisterFont";
     src: url("../font/RolexLight.woff2");
 }
 
-.loginContainer{
+.registerContainer{
     height: 100%;
     width: 100%;
     display: flex;
@@ -17,7 +17,7 @@
     align-items: 'center';
 }
 
-.loginCard {
+.registerCard {
     background-color: white;
     margin-top: 7%;
     margin-bottom: 8%;
@@ -38,24 +38,6 @@
     text-align: center;
 }
 
-.otherLogins{
-    width: 75%;
-    height: 6%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.otherLogins div {
-    width: 47.5%;
-    height: 100%;
-    border-radius: 0.25em;
-    background-color: black;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    cursor: pointer;
-}
 
 input {
     border: none;
@@ -72,8 +54,8 @@ input:focus {
     outline-color: rgb(32, 177, 255);
 }
 
-.loginButton {
-    width: 40%;
+.registerButton {
+    width: 150px;
     height: 3em;
     background-color: rgb(32, 177, 255);
     display: flex;
@@ -84,21 +66,14 @@ input:focus {
     cursor: pointer;
 }
 
-.loginButton:hover { transform: scale(1.25);}
+.registerButton:hover { transform: scale(1.25);}
 
 .hide {
     position: absolute;
     transform: scale(0);
 }
 
-.accountMethod{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width:'90%'
-}
-
-.showLoginPopup {
+.showRegisterPopup {
     position: absolute;
     margin-bottom: 25%;
     margin-top: 25%;
@@ -126,6 +101,14 @@ input:focus {
     font-size:x-small; 
     color: rgb(17, 168, 248);
 }
+
+.accountMethod{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width:'90%'
+}
+
 .closePopup{
     background-image: url("../icons/google.png");
 
