@@ -16,9 +16,9 @@ const LoginScreen=()=>{
         <div className="loginContainer">
             <div className="loginCard">
                 <h1 className="formTitle">Welcome to Func Fit</h1>
-                <input  type='text' placeholder="username" />
-                {/* <input style={{width:'50%', height:'5%'}} type='text' placeholder="username" />
-                <input style={{width:'50%', height:'5%'}} type='password' placeholder="password" /> */}
+                {/* <input  type='text' placeholder="username" /> */}
+                <input style={{width:'60%', height:'10%'}} type='text' placeholder="username" />
+                <input style={{width:'60%', height:'10%'}} type='password' placeholder="password" />
                 <Link id="RouterNavLink"  to="/home">
                     <div className="flex justify-center align-center bg-blue-400 pt-4 pb-4 pl-8 pr-8 rounded-md">Login</div>
                 </Link>
