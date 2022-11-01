@@ -1,5 +1,5 @@
 import React from 'react'
-import { LandingScreen, LoginScreen, RegisterScreen, HomeScreen } from "../Components";
+import { LandingScreen, LoginScreen, RegisterScreen, HomeScreen, ExerciseScreen } from "../Components";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 
@@ -12,6 +12,8 @@ const AppRoutes = () => {
             <Route path="/login" element={<LoginScreen />}/>
             <Route path="/register" element={<RegisterScreen />}/>
             <Route path="/home" element={<HomeScreen />}/>
+            <Route path="/exercise" element={<ExerciseScreen />}/>
+
         </Routes>
     </BrowserRouter>
   )
