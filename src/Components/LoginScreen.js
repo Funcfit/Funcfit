@@ -25,7 +25,7 @@ const LoginScreen=()=>{
                 </Link>
 
                 <div className="otherLogins">
-                    <div className="google"></div>
+                    <div className="google"><a href='localhost:5000/auth'></a></div>
                     <div className="meta"></div>
 
                 </div>
