@@ -29,7 +29,25 @@ const LoginScreen=()=>{
                     console.log(res.data)
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                switch(err.response.status) {
+                    case 400:
+                        console.log(err.response.data.errors);
+                        break;
+                    case 404:
+                        console.log(err.response.data.errors);
+                        break;
+                    case 422:
+                        console.log(err.response.data.errors);
+                        break;
+                    case 500:
+                        console.log(err.response.data.errors);
+                        break;
+                    default:
+                        console.log(err.response.data.errors);
+                        break;
+                }
+            });
     }
 
     return(
