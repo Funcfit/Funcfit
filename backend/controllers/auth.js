@@ -80,6 +80,7 @@ exports.signin = (req, res) => {
        errors.push({ passowrd: "required" });
      }
      if (errors.length > 0) {
+      console.log(errors)
       return res.status(422).json({ errors: errors });
      }
      User.findOne({ email: email }).then(user => {
