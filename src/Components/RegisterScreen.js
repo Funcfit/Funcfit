@@ -2,25 +2,67 @@ import { React, useState } from 'react'
 import { Link } from 'react-router-dom'
 import "../StyleSheet/registerScreen.css"
 
-const RegisterScreen = () => {
-    const [registerPopup,showRegisterPopup]=useState("hide")
+import axios from "axios";
 
+const RegisterScreen = () => {
+
+    const [registerPopup,showRegisterPopup]=useState("hide")
+    
     const registerAlertPopup=()=>{
         showRegisterPopup("showRegisterPopup")
         setTimeout(()=>showRegisterPopup("hide"),3000)
+    }
+    
+    const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [password_confirmation, confirmPassword] = useState('')
 
+    const registerHandler = () => {
+        const creds = { 
+            email: email,
+            username: username,
+            password: password,
+            password_confirmation: password_confirmation
+        };
+        axios
+            .post('/auth/signup', creds)
+            .then((res) => {
+                if (res.data) {
+                    console.log(res.data)
+                }
+            })
+            .catch((err) => {
+                switch(err.response.status) {
+                    case 400:
+                        console.log(err.response.data.errors);
+                        break;
+                    case 404:
+                        console.log(err.response.data.errors);
+                        break;
+                    case 422:
+                        console.log(err.response.data.errors);
+                        break;
+                    case 500:
+                        console.log(err.response.data.errors);
+                        break;
+                    default:
+                        console.log(err.response.data.errors);
+                        break;
+                }
+            });
     }
 
   return (
     <div className='registerContainer'>
         <div className='registerCard'>
             <h1 className='formTitle'>Register to Func Fit</h1>
-            <input  type='email' placeholder="email" />
-            <input  type='text' placeholder="username" />
-            <input  type='password' placeholder="password" />
-            <input  type='password' placeholder="confirm password" />
+            <input onChange={(event)=>{setEmail(event.target.value)}} type='email' placeholder="email" />
+            <input onChange={(event)=>{setUsername(event.target.value)}} type='text' placeholder="username" />
+            <input onChange={(event)=>{setPassword(event.target.value)}} type='password' placeholder="password" />
+            <input onChange={(event)=>{confirmPassword(event.target.value)}} type='password' placeholder="confirm password" />
 
-            <div className="registerButton" onClick={()=>registerAlertPopup()}>register</div>
+            <div className="registerButton" onClick={()=>registerHandler()}>register</div>
 
             <div classname="accountMethod">
                 <a className="dText"> Alreay have an account?  </a>
