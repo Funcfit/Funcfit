@@ -12,7 +12,7 @@ const { db } = require('./models/User');
 
 const app = express();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 // Connect to the database
 mongoose

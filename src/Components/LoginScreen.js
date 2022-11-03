@@ -1,22 +1,30 @@
-import { React, useState } from "react";
+import React,{ useState } from "react";
+import { json, useNavigate } from "react-router-dom";
+
 import { Link } from "react-router-dom";
 import "../StyleSheet/loginScreen.css"
 
+
 import axios from "axios";
 
-const LoginScreen=()=>{
+const LoginScreen=(props)=>{
+    
 
     const [ email, setEmail ] = useState('')
     const [ password, setPass ] = useState('')
+    const[errMsg,setErrMsg]=useState('')
 
     const [ loginPopup, showLoginPopup ] = useState("hide")
+    let navigate = useNavigate();
+    
 
     const loginAlertPopup=()=>{
         showLoginPopup("showLoginPopup")
         setTimeout(()=>showLoginPopup("hide"),3000)
     }
 
-    const loginHandler = () => {
+    const loginHandler = (props) => {
+        
         const creds = { 
             email: email,
             password: password
@@ -24,11 +32,23 @@ const LoginScreen=()=>{
         axios
             .post('/auth/signin', creds)
             .then((res) => {
+                
                 if (res.data) {
-                    console.log(res.data)
+                    
+                    
+                    if(res.data.success==true){
+                        console.log(res.data.success)
+                        navigate('/home');
+                        console.log("props",props)
+                        // props.history.push("/home");
+                    }
+                
                 }
             })
             .catch((err) => {
+                setErrMsg(JSON.stringify(err.response.data.errors))
+                loginAlertPopup()
+                console.log("err",JSON.stringify(err.response.data.errors))
                 switch(err.response.status) {
                     case 400:
                         console.log(err.response.data.errors);
@@ -57,7 +77,7 @@ const LoginScreen=()=>{
                 <input onChange={(event)=>{setEmail(event.target.value)}} style={{width:'60%', height:'10%'}} type='text' placeholder="email" />
                 <input onChange={(event)=>{setPass(event.target.value)}} style={{width:'60%', height:'10%'}} type='password' placeholder="password" />
                 {/* <Link id="RouterNavLink"  to="/home"> */}
-                    <div onClick={()=>loginHandler()} className="flex justify-center align-center bg-blue-400 pt-4 pb-4 pl-8 pr-8 rounded-md">Login</div>
+                    <div onClick={(props)=>loginHandler(props)} className="flex justify-center align-center bg-blue-400 pt-4 pb-4 pl-8 pr-8 rounded-md">Login</div>
                 {/* </Link> */}
 
                 <div className="otherLogins">
@@ -75,8 +95,11 @@ const LoginScreen=()=>{
 
 
                 <div className={loginPopup} >
-                    <h1>Invalid User Name </h1>
+                 
+                    <h1>{errMsg}</h1>
+
                 </div>
+
             </div>
         </div>
     );

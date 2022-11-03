@@ -7,6 +7,8 @@ import axios from "axios";
 const RegisterScreen = () => {
 
     const [registerPopup,showRegisterPopup]=useState("hide")
+
+    const [popupMsg,setPopupMsg]=useState("")
     
     const registerAlertPopup=()=>{
         showRegisterPopup("showRegisterPopup")
@@ -29,10 +31,15 @@ const RegisterScreen = () => {
             .post('/auth/signup', creds)
             .then((res) => {
                 if (res.data) {
+                    setPopupMsg(JSON.stringify(res.data))
+                    registerAlertPopup()
+
                     console.log(res.data)
                 }
             })
             .catch((err) => {
+                setPopupMsg(JSON.stringify(err.response.data.errors))
+                    registerAlertPopup()
                 switch(err.response.status) {
                     case 400:
                         console.log(err.response.data.errors);
@@ -71,7 +78,7 @@ const RegisterScreen = () => {
                 </Link>
             </div>
             <div className={registerPopup} >
-                <h1>Invalid credentials</h1>
+                <h1>{popupMsg}</h1>
             </div>
         </div>
     </div>
