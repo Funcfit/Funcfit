@@ -8,6 +8,8 @@ require('dotenv').config();
 //import routes
 const routes = require('./routes/api');
 const authRoutes = require('./routes/auth');
+const passwordReset = require("./routes/passwordReset");
+const users = require("./routes/users");
 const { db } = require('./models/User');
 
 const app = express();
@@ -37,6 +39,8 @@ app.use(cors({
 
 app.use('/api', routes);
 app.use('/auth', authRoutes);
+app.use("/users", users);
+app.use("/password-reset", passwordReset);
 
 app.use((err, req, res, next) => {
   console.log(err);
