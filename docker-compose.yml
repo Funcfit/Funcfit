@@ -1,0 +1,14 @@
+services:
+  react_frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.reactUI
+    ports:
+      - "3000:3000"    
+
+  node_backend: 
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.nodeBackend
+    ports: 
+      - "5000:5000"    #external:internal 

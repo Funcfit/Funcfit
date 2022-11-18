@@ -1,0 +1,19 @@
+# setting base image as node v16
+FROM node:16
+
+# setting work directory
+WORKDIR /funcfit_react_frontend
+
+# copying only necessary source code files
+COPY ./package.json ./package.json
+COPY ./public ./public
+COPY ./src ./src
+
+# installing frontend node dependencies on container
+RUN npm install
+
+# exposing relevant port for frontend access
+EXPOSE 3000
+
+# running frontend application
+CMD ["npm","start"]

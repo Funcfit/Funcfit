@@ -8,11 +8,11 @@ require('dotenv').config();
 //import routes
 const routes = require('./routes/api');
 const authRoutes = require('./routes/auth');
-const { db } = require('./models/User');
+const { db } = require('./models/user');
 
 const app = express();
 
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 // Connect to the database
 mongoose
