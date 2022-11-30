@@ -1,5 +1,6 @@
 import React from 'react'
 import { LandingScreen, LoginScreen, RegisterScreen, HomeScreen, ExerciseScreen } from "../Components";
+import ExerciseDetails from '../Components/ExerciseDetails';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 
@@ -13,6 +14,7 @@ const AppRoutes = () => {
             <Route path="/register" element={<RegisterScreen />}/>
             <Route path="/home" element={<HomeScreen />}/>
             <Route path="/exercise" element={<ExerciseScreen />}/>
+            <Route path="/exercisedetails" element={<ExerciseDetails />}/>
             
 
         </Routes>

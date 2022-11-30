@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const MainCard = (props) => {
+  const navigate=useNavigate()
     console.log("pp",props.workout)
   return (
     <>
@@ -8,10 +10,11 @@ const MainCard = (props) => {
         <img
           className="h-32 mx-auto"
           alt="workout"
-          src={props.workout.urls.regular}
+          src={props.workout.gifUrl}
+          onClick={()=>{navigate("/exercisedetails")}}
         />
         <figcaption className="text-center mt-2">
-          <p>Workout</p>
+          <p>{props.workout.name}</p>
         </figcaption>
       </figure>
       
