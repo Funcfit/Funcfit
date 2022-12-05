@@ -5,14 +5,14 @@ const cors = require('cors');
 
 require('dotenv').config();
 
+const { createServer } = require("http");
+
+//socket
+const { Server } = require("socket.io");
+
+
 //import routes
-const routes = require('./routes/api');
-const authRoutes = require('./routes/auth');
 const { db } = require('./models/user');
-
-const app = express();
-
-const port = process.env.PORT || 5000;
 
 // Connect to the database
 mongoose
@@ -22,6 +22,21 @@ mongoose
 
 // Since mongoose's Promise is deprecated, we override it with Node's Promise
 mongoose.Promise = global.Promise;
+
+
+//middleware
+const { authenticateUser } = require("./middleware/auth.js");
+
+const routes = require('./routes/api');
+const authRoutes = require('./routes/auth');
+const chatRoute = require('./routes/chat');
+const messageRoute = require('./routes/message');
+
+
+const app = express();
+
+const port = process.env.PORT || 5000;
+
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -36,12 +51,56 @@ app.use(cors({
 }));
 
 app.use('/api', routes);
-app.use('/auth', authRoutes);
+app.use("/api/chat", authenticateUser, chatRoute);
+app.use("/api/message", authenticateUser, messageRoute);
+app.use('/api/auth', authRoutes);
 
 app.use((err, req, res, next) => {
   console.log(err);
   next();
 });
+
+const server = createServer(app);
+
+const io = new Server(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "*",
+  },
+});
+
+io.on("connection", (socket) => {
+  //connected to correct id
+  socket.on("setup", (userData) => {
+    socket.join(userData._id);
+
+    socket.emit("connected");
+  });
+
+  socket.on("join-chat", (room) => {
+    socket.join(room);
+  });
+
+  socket.on("typing", (room) => socket.in(room).emit("typing"));
+  socket.on("stop-typing", (room) => socket.in(room).emit("stop-typing"));
+
+  socket.on("new-message", (newMessageReceived) => {
+    let chat = newMessageReceived.chat;
+
+    if (!chat.users) return console.log(`chat.users not defined`);
+
+    chat.users.forEach((user) => {
+      if (user._id === newMessageReceived.sender._id) return;
+
+      socket.in(user._id).emit("message-received", newMessageReceived);
+    });
+  });
+
+  socket.off("setup", () => {
+    socket.leave(userData._id);
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
