@@ -35,8 +35,7 @@ const LoginScreen=(props)=>{
                 
                 if (res.data) {
                     
-                    
-                    if(res.data.success==true){
+                    if(res.status == 200){
                         console.log(res.data.success)
                         navigate('/home');
                         console.log("props",props)

@@ -8,15 +8,16 @@ require('dotenv').config();
 //import routes
 const routes = require('./routes/api');
 const authRoutes = require('./routes/auth');
+const chatRoute = require('./routes/chat');
+const messageRoute = require('./routes/message');
+
+//middleware
 const { db } = require('./models/user');
 const { createServer } = require("http");
+const { authenticateUser } = require("./middleware/auth.js");
 
 //socket
 const { Server } = require("socket.io");
-
-
-//import routes
-const { db } = require('./models/user');
 
 // Connect to the database
 mongoose
@@ -26,16 +27,6 @@ mongoose
 
 // Since mongoose's Promise is deprecated, we override it with Node's Promise
 mongoose.Promise = global.Promise;
-
-
-//middleware
-const { authenticateUser } = require("./middleware/auth.js");
-
-const routes = require('./routes/api');
-const authRoutes = require('./routes/auth');
-const chatRoute = require('./routes/chat');
-const messageRoute = require('./routes/message');
-
 
 const app = express();
 
@@ -55,9 +46,9 @@ app.use(cors({
 }));
 
 app.use('/api', routes);
-app.use("/api/chat", authenticateUser, chatRoute);
-app.use("/api/message", authenticateUser, messageRoute);
-app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
+app.use('/chat', authenticateUser, chatRoute);
+app.use('/message', authenticateUser, messageRoute);
 
 app.use((err, req, res, next) => {
   console.log(err);
